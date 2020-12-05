@@ -3,15 +3,14 @@ package session
 import (
 	"context"
 	"fmt"
-	"github.com/geiqin/supports/xconfig"
 	"github.com/micro/go-micro/v2/metadata"
 	"log"
 )
 
 var globalSessionManager *Manager
 
-func Load() {
-	cnf := xconfig.GetSessionCfg()
+func Load(cnf *SessConfig) {
+	//cnf := xconfig.GetSessionCfg()
 	if cnf == nil {
 		log.Println("load session config failed")
 	}
@@ -20,7 +19,7 @@ func Load() {
 	newManager(cnf)
 }
 
-func newManager(cfg *xconfig.SessionInfo) {
+func newManager(cfg *SessConfig) {
 	var err error
 	globalSessionManager, err = NewSessionManager(cfg.Driver, cfg.CookieName, cfg.MaxLifeTime)
 	if err != nil {
