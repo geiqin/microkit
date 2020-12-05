@@ -2,9 +2,9 @@
 package config
 
 import (
+	"github.com/geiqin/microkit/plugins/config/source/configmap"
 	"github.com/micro/go-micro/v2/config"
 	"github.com/micro/go-micro/v2/config/source/env"
-	"github.com/micro/go-plugins/config/source/configmap/v2"
 )
 
 // NewConfig returns config with env and k8s configmap setup
