@@ -3,7 +3,7 @@ package xconfig
 import (
 	"github.com/micro/go-micro/v2/config"
 	"github.com/micro/go-micro/v2/config/reader"
-	grpcConfig "github.com/micro/plugins/config/source/grpc/v2"
+	grpcConfig "github.com/micro/go-plugins/config/source/grpc/v2"
 	"log"
 )
 
