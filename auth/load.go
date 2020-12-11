@@ -14,18 +14,13 @@ type TokenConfig struct {
 	ExpireTime int    `json:"expire_time"`
 }
 
-func Load(storeCnf *TokenConfig, userCnf *TokenConfig) {
-	storeConf = storeCnf
-	userConf = userCnf
-
-	//storeConf = xconfig.GetTokenCfg("store")
+func Load(storeConf *TokenConfig, userConf *TokenConfig) {
 	if storeConf == nil {
 		log.Println("load store_token config failed")
 		return
 	}
 	log.Println("load store_token config succeed")
 
-	//userConf = xconfig.GetTokenCfg("user")
 	if userConf == nil {
 		log.Println("load user_token config failed")
 		return
