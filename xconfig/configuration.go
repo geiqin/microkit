@@ -11,9 +11,9 @@ func Register(names ...string) {
 		defNames = append(defNames, names...)
 	}
 
-	address := os.Getenv("CFG_SERVER_ADDRESS")
+	address := os.Getenv("SAAS_CONFIG_ADDRESS")
 	if address == "" {
-		address = "127.0.0.1:8600"
+		panic("unset SAAS_CONFIG_ADDRESS env")
 	}
 
 	mgr := NewConfigManager(address, defNames)
