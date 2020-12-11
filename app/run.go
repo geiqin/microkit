@@ -2,11 +2,11 @@ package app
 
 import (
 	"github.com/geiqin/gotools/helper"
-	//"github.com/geiqin/supports/auth"
+	"github.com/geiqin/microkit/auth"
 	"github.com/geiqin/microkit/cache"
 	"github.com/geiqin/microkit/session"
+	"github.com/geiqin/microkit/xconfig"
 	"log"
-	"os"
 )
 
 var appOption *Option
@@ -38,29 +38,26 @@ func Run(flag string, private bool, option ...Option) {
 	opt.Private = private
 	appOption = opt
 
-	session.Load(&session.SessConfig{
-		Driver:      "redis",
-		CookieName:  os.Getenv("QIN_SESSION_COOKIE_NAME"),
-		MaxLifeTime: 3600,
-		Provider:    &session.RedisProviderConfig{
-			Host:     os.Getenv("QIN_REDIS_HOST"),
-			Port:    helper.StringToInt(os.Getenv("QIN_REDIS_PORT")),
-			Username: os.Getenv("QIN_REDIS_USERNAME"),
-			Password: os.Getenv("QIN_REDIS_PASSWORD"),
-			Database: 0,
-		},
-	})
+	xSessionCnf := xconfig.GetSessionCfg()
+	sessionCnf := &session.SessConfig{}
+	helper.StructCopy(sessionCnf, xSessionCnf)
+	session.Load(sessionCnf)
 
-	cache.Load(&cache.RedisConfig{
-		Host:     os.Getenv("QIN_REDIS_HOST"),
-		Port:    helper.StringToInt(os.Getenv("QIN_REDIS_PORT")),
-		Username: os.Getenv("QIN_REDIS_USERNAME"),
-		Password: os.Getenv("QIN_REDIS_PASSWORD"),
-		Database: 1,
-	})
+	xCacheCnf := xconfig.GetCacheCfg()
+	cacheCnf := &cache.RedisConfig{}
+	helper.StructCopy(cacheCnf, xCacheCnf)
+	cache.Load(cacheCnf)
 
-	//database.Load(opt.Flag)
-	//auth.Load()
+	xStoreConf := xconfig.GetTokenCfg("store")
+	xUserConf := xconfig.GetTokenCfg("user")
+	storeConf := &auth.TokenConfig{}
+	userConf := &auth.TokenConfig{}
+
+	helper.StructCopy(storeConf, xStoreConf)
+	helper.StructCopy(userConf, xUserConf)
+
+	auth.Load(storeConf, userConf)
+
 }
 
 func Flag() string {
