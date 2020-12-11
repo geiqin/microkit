@@ -4,7 +4,6 @@ import (
 	"crypto/rand"
 	"encoding/base64"
 	"fmt"
-	"github.com/geiqin/supports/xconfig"
 	"io"
 	//"net/http"
 	//"net/url"
@@ -29,11 +28,14 @@ type Provider interface {
 	SessionGC(maxLifeTime int64)
 }
 
+/*
 type SessionConfig struct {
 	Provider    xconfig.RedisInfo `json:"provider"`
 	CookieName  string            `json:"cookie_name"`
 	MaxLifeTime int64             `json:"max_life_time"`
 }
+
+*/
 
 type Manager struct {
 	cookieName  string

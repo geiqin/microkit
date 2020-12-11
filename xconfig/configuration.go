@@ -1,6 +1,12 @@
 package xconfig
 
-import "os"
+import (
+	"github.com/geiqin/gotools/database"
+	"github.com/geiqin/microkit/auth"
+	"github.com/geiqin/microkit/cache"
+	"github.com/geiqin/microkit/session"
+	"os"
+)
 
 var conf *Configuration
 
@@ -26,7 +32,7 @@ func GetConfig() *Configuration {
 }
 
 //获取数据库配置
-func GetDatabaseCfg(name string) *DatabaseInfo {
+func GetDatabaseCfg(name string) *database.DbConfig {
 	cfg := conf.DatabaseList[name]
 	return cfg
 }
@@ -38,7 +44,7 @@ func GetFilesystemCfg(name string) *FileSystemInfo {
 }
 
 //获取店铺数据库配置
-func GetStoreDatabaseCfg(name string, storeFlag string) *DatabaseInfo {
+func GetStoreDatabaseCfg(name string, storeFlag string) *database.DbConfig {
 	cfg := *conf.DatabaseList[name]
 	if &cfg != nil {
 		cfg.Database = storeFlag
@@ -47,19 +53,19 @@ func GetStoreDatabaseCfg(name string, storeFlag string) *DatabaseInfo {
 }
 
 //获取Redis配置
-func GetRedisCfg(name string) *RedisInfo {
+func GetRedisCfg(name string) *cache.RedisConfig {
 	cfg := conf.RedisList[name]
 	return cfg
 }
 
 //获取缓存配置
-func GetCacheCfg() *RedisInfo {
+func GetCacheCfg() *cache.RedisConfig {
 	cfg := conf.RedisList["cache"]
 	return cfg
 }
 
 //获取会话配置
-func GetSessionCfg() *SessionInfo {
+func GetSessionCfg() *session.SessConfig {
 	if conf.SessionInfo != nil {
 		conf.SessionInfo.Provider = GetRedisCfg("session")
 	}
@@ -67,7 +73,7 @@ func GetSessionCfg() *SessionInfo {
 }
 
 //获取令牌配置
-func GetTokenCfg(name string) *TokenInfo {
+func GetTokenCfg(name string) *auth.TokenConfig {
 	cfg := conf.TokenList[name]
 	return cfg
 }

@@ -1,7 +1,6 @@
 package app
 
 import (
-	"github.com/geiqin/gotools/helper"
 	"github.com/geiqin/microkit/auth"
 	"github.com/geiqin/microkit/cache"
 	"github.com/geiqin/microkit/session"
@@ -38,24 +37,14 @@ func Run(flag string, private bool, option ...Option) {
 	opt.Private = private
 	appOption = opt
 
-	xSessionCnf := xconfig.GetSessionCfg()
-	sessionCnf := &session.SessConfig{}
-	helper.StructCopy(sessionCnf, xSessionCnf)
+	sessionCnf := xconfig.GetSessionCfg()
 	session.Load(sessionCnf)
 
-	xCacheCnf := xconfig.GetCacheCfg()
-	cacheCnf := &cache.RedisConfig{}
-	helper.StructCopy(cacheCnf, xCacheCnf)
+	cacheCnf := xconfig.GetCacheCfg()
 	cache.Load(cacheCnf)
 
-	xStoreConf := xconfig.GetTokenCfg("store")
-	xUserConf := xconfig.GetTokenCfg("user")
-	storeConf := &auth.TokenConfig{}
-	userConf := &auth.TokenConfig{}
-
-	helper.StructCopy(storeConf, xStoreConf)
-	helper.StructCopy(userConf, xUserConf)
-
+	storeConf := xconfig.GetTokenCfg("store")
+	userConf := xconfig.GetTokenCfg("user")
 	auth.Load(storeConf, userConf)
 
 }

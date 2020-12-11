@@ -1,16 +1,23 @@
 package xconfig
 
+import (
+	"github.com/geiqin/gotools/database"
+	"github.com/geiqin/microkit/auth"
+	"github.com/geiqin/microkit/cache"
+	"github.com/geiqin/microkit/session"
+)
+
 type Configuration struct {
-	AppInfo        *AppInfo                   `json:"app_info"`
-	SessionInfo    *SessionInfo               `json:"session_info"`
-	DatabaseList   map[string]*DatabaseInfo   `json:"database_list"`
-	RedisList      map[string]*RedisInfo      `json:"redis_list"`
-	FileSystemList map[string]*FileSystemInfo `json:"file_system_list"`
-	TokenList      map[string]*TokenInfo      `json:"token_list"`
-	SmsList        map[string]*SmsInfo        `json:"sms_list"`
-	MailList       map[string]*MailInfo       `json:"mail_list"`
-	WxPayInfo      *WxPayInfo                 `json:"wx_pay_info"`
-	AliPayInfo     *AliPayInfo                `json:"ali_pay_info"`
+	AppInfo        *AppInfo                      `json:"app_info"`
+	SessionInfo    *session.SessConfig           `json:"session_info"`
+	DatabaseList   map[string]*database.DbConfig `json:"database_list"`
+	RedisList      map[string]*cache.RedisConfig `json:"redis_list"`
+	FileSystemList map[string]*FileSystemInfo    `json:"file_system_list"`
+	TokenList      map[string]*auth.TokenConfig  `json:"token_list"`
+	SmsList        map[string]*SmsInfo           `json:"sms_list"`
+	MailList       map[string]*MailInfo          `json:"mail_list"`
+	WxPayInfo      *WxPayInfo                    `json:"wx_pay_info"`
+	AliPayInfo     *AliPayInfo                   `json:"ali_pay_info"`
 }
 
 type DatabaseInfo struct {
@@ -22,6 +29,7 @@ type DatabaseInfo struct {
 	Prefix   string `json:"prefix"`
 }
 
+/*
 type RedisInfo struct {
 	Host     string `json:"host"`
 	Port     int    `json:"port"`
@@ -29,6 +37,8 @@ type RedisInfo struct {
 	Password string `json:"password"`
 	Database int    `json:"database"`
 }
+
+*/
 
 type FileSystemInfo struct {
 	Driver    string `json:"driver"`
@@ -39,12 +49,15 @@ type FileSystemInfo struct {
 	Transport string `json:"transport"`
 }
 
+/*
 type TokenInfo struct {
 	Issuer     string `json:"issuer"`
 	Audience   string `json:"audience"`
 	PrivateKey []byte `json:"private_key"`
 	ExpireTime int    `json:"expire_time"`
 }
+
+*/
 
 type SmsInfo struct {
 	Address string `json:"address"`
@@ -60,12 +73,15 @@ type AppInfo struct {
 type CacheInfo struct {
 }
 
+/*
 type SessionInfo struct {
 	Driver      string     `json:"driver"`
 	CookieName  string     `json:"cookie_name"`
 	MaxLifeTime int64      `json:"max_life_time"`
 	Provider    *RedisInfo `json:"provider"`
 }
+
+*/
 
 type WxPayInfo struct {
 	NotifyUrl    string `json:"notify_url"`

@@ -1,6 +1,10 @@
 package xconfig
 
 import (
+	"github.com/geiqin/gotools/database"
+	"github.com/geiqin/microkit/auth"
+	"github.com/geiqin/microkit/cache"
+	"github.com/geiqin/microkit/session"
 	"github.com/micro/go-micro/v2/config"
 	"github.com/micro/go-micro/v2/config/reader"
 	grpcConfig "github.com/micro/go-plugins/config/source/grpc/v2"
@@ -21,21 +25,21 @@ func (b *ConfigManger) makeApp(read reader.Value) error {
 }
 
 func (b *ConfigManger) makeAppSession(read reader.Value) error {
-	var info *SessionInfo
+	var info *session.SessConfig
 	read.Scan(&info)
 	b.conf.SessionInfo = info
 	return nil
 }
 
 func (b *ConfigManger) makeToken(read reader.Value) error {
-	var list map[string]*TokenInfo
+	var list map[string]*auth.TokenConfig
 	read.Scan(&list)
 	b.conf.TokenList = list
 	return nil
 }
 
 func (b *ConfigManger) makeRedis(read reader.Value) error {
-	var list map[string]*RedisInfo
+	var list map[string]*cache.RedisConfig
 	read.Scan(&list)
 	b.conf.RedisList = list
 	return nil
@@ -63,7 +67,7 @@ func (b *ConfigManger) makFilesystem(read reader.Value) error {
 }
 
 func (b *ConfigManger) makeDatabase(read reader.Value) error {
-	var list map[string]*DatabaseInfo
+	var list map[string]*database.DbConfig
 	read.Scan(&list)
 	b.conf.DatabaseList = list
 	return nil
