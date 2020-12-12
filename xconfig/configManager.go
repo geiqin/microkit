@@ -17,6 +17,7 @@ type ConfigManger struct {
 }
 
 func (b *ConfigManger) readGrpc(name string) (config.Config, error) {
+	log.Println("config addr:", b.address)
 	source := grpcConfig.NewSource(
 		grpcConfig.WithAddress(b.address),
 		grpcConfig.WithPath("/"+name),
