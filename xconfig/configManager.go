@@ -6,7 +6,6 @@ import (
 	"github.com/geiqin/microkit/cache"
 	"github.com/geiqin/microkit/session"
 	"github.com/micro/go-micro/v2/config"
-	"github.com/micro/go-micro/v2/config/reader"
 	grpcConfig "github.com/micro/go-plugins/config/source/grpc/v2"
 	"log"
 )
@@ -17,89 +16,65 @@ type ConfigManger struct {
 	names   []string
 }
 
-func (b *ConfigManger) makeApp(read reader.Value) error {
-	var info *AppInfo
-	read.Scan(&info)
-	b.conf.AppInfo = info
-	return nil
-}
+func (b *ConfigManger) readGrpc(name string) (config.Config, error) {
+	source := grpcConfig.NewSource(
+		grpcConfig.WithAddress(b.address),
+		grpcConfig.WithPath("/"+name),
+	)
 
-func (b *ConfigManger) makeAppSession(read reader.Value) error {
-	var info *session.SessConfig
-	read.Scan(&info)
-	b.conf.SessionInfo = info
-	return nil
-}
+	// create new config
+	conf, _ := config.NewConfig()
 
-func (b *ConfigManger) makeToken(read reader.Value) error {
-	var list map[string]*auth.TokenConfig
-	read.Scan(&list)
-	b.conf.TokenList = list
-	return nil
-}
+	// load the source into config
+	if err := conf.Load(source); err != nil {
+		return nil, err
+	}
 
-func (b *ConfigManger) makeRedis(read reader.Value) error {
-	var list map[string]*cache.RedisConfig
-	read.Scan(&list)
-	b.conf.RedisList = list
-	return nil
-}
+	return conf, nil
 
-func (b *ConfigManger) makeWxPay(read reader.Value) error {
-	var info *WxPayInfo
-	read.Scan(&info)
-	b.conf.WxPayInfo = info
-	return nil
-}
-
-func (b *ConfigManger) makeAliPay(read reader.Value) error {
-	var info *AliPayInfo
-	read.Scan(&info)
-	b.conf.AliPayInfo = info
-	return nil
-}
-
-func (b *ConfigManger) makFilesystem(read reader.Value) error {
-	var list map[string]*FileSystemInfo
-	read.Scan(&list)
-	b.conf.FileSystemList = list
-	return nil
-}
-
-func (b *ConfigManger) makeDatabase(read reader.Value) error {
-	var list map[string]*database.DbConfig
-	read.Scan(&list)
-	b.conf.DatabaseList = list
-	return nil
 }
 
 func (b *ConfigManger) Load() *Configuration {
-	for _, app := range b.names {
-		if err := config.Load(grpcConfig.NewSource(
-			grpcConfig.WithAddress(b.address),
-			grpcConfig.WithPath("/"+app),
-		)); err != nil {
-			log.Fatalf("[ConfigManger] load files error，%s", err)
-			return nil
+	for _, name := range b.names {
+		conf, err := b.readGrpc(name)
+		if err != nil {
+			log.Fatal("read_cfg_error::", err)
 		}
-		switch app {
+
+		switch name {
 		case "app":
-			//b.makeDatabase(config.Get("app"))
-			b.makeAppSession(config.Get("session"))
+			sess := &session.SessConfig{}
+			sessCfg := conf.Get("session")
+			sessCfg.Scan(sess)
+			b.conf.SessionInfo = sess
 			break
 		case "database":
-			b.makeDatabase(config.Get("connections"))
-			b.makeRedis(config.Get("redis"))
+			dbA := conf.Get("connections")
+			dbB := conf.Get("redis")
+			var dbAList map[string]*database.DbConfig
+			var dbBList map[string]*cache.RedisConfig
+			dbA.Scan(dbAList)
+			dbB.Scan(dbBList)
+			b.conf.DatabaseList = dbAList
+			b.conf.RedisList = dbBList
 			break
 		case "filesystem":
-			b.makFilesystem(config.Get("clouds"))
+			var cloudList map[string]*FileSystemInfo
+			cloudCfg := conf.Get("connections")
+			cloudCfg.Scan(cloudList)
+			b.conf.FileSystemList = cloudList
 			break
 		case "token":
-			b.makeToken(config.Get("tokens"))
+			var tkList map[string]*auth.TokenConfig
+			cloudCfg := conf.Get("tokens")
+			cloudCfg.Scan(tkList)
+			b.conf.TokenList = tkList
 			break
 		case "payment":
-			b.makeWxPay(config.Get("providers", "weixin"))
-			b.makeAliPay(config.Get("providers", "alipay"))
+			var wx *WxPayInfo
+			wxCfg := conf.Get("providers", "weixin")
+			wxCfg.Scan(wx)
+			b.conf.WxPayInfo = wx
 			break
 		}
 	}
