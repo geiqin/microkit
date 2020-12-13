@@ -4,7 +4,7 @@ import (
 	"github.com/geiqin/microkit/auth"
 	"github.com/geiqin/microkit/cache"
 	"github.com/geiqin/microkit/session"
-	"github.com/geiqin/microkit/xconfig"
+	"github.com/geiqin/xconfig/client"
 	"log"
 )
 
@@ -37,14 +37,15 @@ func Run(flag string, private bool, option ...Option) {
 	opt.Private = private
 	appOption = opt
 
-	sessionCnf := xconfig.GetSessionCfg()
+	appCfg := client.GetAppConfig()
+	databaseCfg := client.GetDatabaseConfig()
+	sessionCnf := appCfg.Session
+	cacheCnf := databaseCfg.RedisList["cache"]
 	session.Load(sessionCnf)
-
-	cacheCnf := xconfig.GetCacheCfg()
 	cache.Load(cacheCnf)
 
-	storeConf := xconfig.GetTokenCfg("store")
-	userConf := xconfig.GetTokenCfg("user")
+	storeConf := appCfg.Tokens["store"]
+	userConf := appCfg.Tokens["user"]
 	auth.Load(storeConf, userConf)
 
 }

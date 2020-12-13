@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/geiqin/gotools/helper"
+	"github.com/geiqin/xconfig/model"
 	"github.com/go-redis/redis"
 	"log"
 	"sync"
@@ -19,7 +20,7 @@ type FromRedis struct {
 	//list     *list.List               //用来做 gc
 }
 
-func LoadRedis(cfg *SessConfig) {
+func LoadRedis(cfg *model.SessionInfo) {
 	if cfg == nil || cfg.Provider == nil {
 		log.Println("load redis of session config failed")
 		return

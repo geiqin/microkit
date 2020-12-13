@@ -1,12 +1,14 @@
 package auth
 
 import (
+	"github.com/geiqin/xconfig/model"
 	"log"
 )
 
-var storeConf *TokenConfig
-var userConf *TokenConfig
+var storeConf *model.TokenInfo
+var userConf *model.TokenInfo
 
+/*
 type TokenConfig struct {
 	Issuer     string `json:"issuer"`
 	Audience   string `json:"audience"`
@@ -14,7 +16,9 @@ type TokenConfig struct {
 	ExpireTime int    `json:"expire_time"`
 }
 
-func Load(storeConf *TokenConfig, userConf *TokenConfig) {
+*/
+
+func Load(storeConf *model.TokenInfo, userConf *model.TokenInfo) {
 	if storeConf == nil {
 		log.Println("load store_token config failed")
 		return

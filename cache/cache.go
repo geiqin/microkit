@@ -1,6 +1,7 @@
 package cache
 
 import (
+	"github.com/geiqin/xconfig/model"
 	"log"
 	"sync"
 	"time"
@@ -21,8 +22,7 @@ type Cache interface {
 	Delete(key string)
 }
 
-func Load(cfg *RedisConfig) {
-	//cfg := xconfig.GetCacheCfg()
+func Load(cfg *model.RedisInfo) {
 	if cfg == nil {
 		log.Println("load cache config failed")
 		return
