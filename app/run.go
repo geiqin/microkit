@@ -40,6 +40,8 @@ func Run(flag string, private bool, option ...Option) {
 
 	appCfg := client.GetAppConfig()
 	databaseCfg := client.GetDatabaseConfig()
+	log.Println("app_run appCfg:", appCfg)
+	log.Println("app_run databaseCfg:", databaseCfg)
 	connCfg := databaseCfg.Connections
 	database.Load(connCfg)
 	sessionCnf := appCfg.Session
