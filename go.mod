@@ -12,4 +12,6 @@ require (
 	github.com/micro/go-plugins/client/selector/static/v2 v2.9.1
 	github.com/micro/go-plugins/config/source/grpc/v2 v2.9.1
 	github.com/micro/go-plugins/registry/kubernetes/v2 v2.9.1
+	gorm.io/driver/mysql v1.0.3
+	gorm.io/gorm v1.20.8
 )
