@@ -32,6 +32,7 @@ func CreateMysqlDB(cfg *model.DatabaseInfo) *gorm.DB {
 	connString := fmt.Sprintf("%s:%s@tcp(%s)/%s?charset=utf8mb4&loc=Local", cfg.Username, cfg.Password, serverAddr, cfg.Database)
 
 	db, err := gorm.Open(mysql.Open(connString), &gorm.Config{
+		DisableForeignKeyConstraintWhenMigrating: true,
 		NamingStrategy: schema.NamingStrategy{
 			TablePrefix:   cfg.Prefix, // table name prefix, table for `User` would be `t_users`
 			SingularTable: false,      // use singular table name, table for `User` would be `user` with this option enabled
