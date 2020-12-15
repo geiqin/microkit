@@ -1,0 +1,60 @@
+syntax = "proto3";
+
+package common;
+option go_package ="common";
+
+message Empty {
+}
+
+message Info {
+    int32 number = 1;
+    bool passed =2;
+    string content = 3;
+    string status =4;
+}
+
+message Error {
+    int32 code = 1;
+    string message = 2;
+}
+
+message Pager {
+    int32 paged = 1;
+    int32 total = 2;
+    int32 page_count = 3;
+    int32 page_size = 4;
+    int32 prev_page =5;
+    int32 last_page =6;
+}
+
+message BaseWhere {
+    int32 paged = 1;
+    int32 page_size = 2;
+    int32 top = 3;
+    //base params
+    int64 id = 4;
+    string mobile = 5;
+    string name = 6;
+    string title = 7;
+    string keywords = 8;
+    string status =9;
+    int64 area_id=10;
+    int32 type_id=11;
+    int32 cat_id=12;
+    string start_date =13;
+    string end_date =14;
+    repeated int64 ids = 15;
+}
+
+//令牌
+message Token {
+    string access_token = 1;
+    string refresh_token = 2;
+}
+
+//令牌应答
+message TokenResponse {
+    Token entity = 1;
+    Error error = 2;
+    Info info =3;
+}
