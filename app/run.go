@@ -49,9 +49,7 @@ func Run(flag string, private bool, option ...Option) {
 	session.Load(sessionCnf)
 	cache.Load(cacheCnf)
 
-	storeConf := appCfg.Tokens["store"]
-	userConf := appCfg.Tokens["user"]
-	auth.Load(storeConf, userConf)
+	auth.Load(appCfg.Token)
 
 }
 
