@@ -2,8 +2,8 @@ package gateway
 
 //授权频道
 type GrantChanel struct {
-	Id     int    `json:"id"`   //id
-	Name   string `json:"name"` //频道名称
+	Id     int    `json:"id"`                   //id
+	Name   string `json:"name"  gorm:"size:50"` //频道名称
 	Routes []*GrantRoute
 }
 
@@ -11,9 +11,9 @@ type GrantChanel struct {
 type GrantRoute struct {
 	Id            int    `json:"id"`                            //id
 	GrantChanelId int    `json:"grant_channel_id"`              //id
-	Name          string `json:"name"`                          //名称
-	Path          string `json:"path"`                          //路径
-	Method        string `json:"method"`                        //请求方式 ALL GET POST DELETE
+	Name          string `json:"name" gorm:"size:50"`           //名称
+	Path          string `json:"path" gorm:"size:100"`          //路径
+	Method        string `json:"method" gorm:"size:10"`         //请求方式 ALL GET POST DELETE
 	HasStore      bool   `json:"has_store" gorm:"default:0"`    //是否店铺API
 	AllowUser     bool   `json:"has_user" gorm:"default:0"`     //授权用户
 	AllowCustomer bool   `json:"has_customer" gorm:"default:0"` //授权客户
