@@ -10,6 +10,7 @@ type GrantChanel struct {
 //授权路由
 type GrantRoute struct {
 	Id            int    `json:"id"`                            //id
+	GrantChanelId int    `json:"grant_channel_id"`              //id
 	Name          string `json:"name"`                          //名称
 	Path          string `json:"path"`                          //路径
 	Method        string `json:"method"`                        //请求方式 ALL GET POST DELETE
