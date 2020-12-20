@@ -8,7 +8,8 @@ import (
 var tokenCfg *model.TokenInfo
 
 func Load(tokenConf *model.TokenInfo) {
-	if tokenConf == nil {
+	tokenCfg = tokenConf
+	if tokenCfg == nil {
 		log.Println("load token config failed")
 		return
 	}
