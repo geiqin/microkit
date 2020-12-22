@@ -29,7 +29,7 @@ func CreateMysqlDB(cfg *model.DatabaseInfo) *gorm.DB {
 
 	//当前有效两种
 	//connString := cfg.Username + ":" + cfg.Password + "@tcp(" + serverAddr + ")/" + cfg.Database + "?charset=utf8mb4&loc=Local"
-	connString := fmt.Sprintf("%s:%s@tcp(%s)/%s?charset=utf8mb4&loc=Local", cfg.Username, cfg.Password, serverAddr, cfg.Database)
+	connString := fmt.Sprintf("%s:%s@tcp(%s)/%s?charset=utf8mb4&loc=Local&&parseTime=True", cfg.Username, cfg.Password, serverAddr, cfg.Database)
 
 	db, err := gorm.Open(mysql.Open(connString), &gorm.Config{
 		DisableForeignKeyConstraintWhenMigrating: true,
