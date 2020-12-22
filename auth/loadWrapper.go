@@ -5,6 +5,7 @@ import (
 	"errors"
 	"github.com/micro/go-micro/v2/metadata"
 	"github.com/micro/go-micro/v2/server"
+	"log"
 )
 
 // AuthWrapper 是一个高阶函数，入参是 ”下一步“ 函数，出参是认证函数
@@ -21,6 +22,8 @@ func LoadWrapper(fn server.HandlerFunc) server.HandlerFunc {
 		userId := meta["Auth-User-Id"]
 		storeId := meta["Auth-Store-Id"]
 		customerId := meta["Auth-Customer-Id"]
+		sessionId := meta["Session-Id"]
+		mode := meta["Auth-Mode"]
 
 		if userId != "" {
 			ctx = context.WithValue(ctx, "user_id", userId)
@@ -31,6 +34,14 @@ func LoadWrapper(fn server.HandlerFunc) server.HandlerFunc {
 		if customerId != "" {
 			ctx = context.WithValue(ctx, "customer_id", customerId)
 		}
+		if sessionId != "" {
+			ctx = context.WithValue(ctx, "session-id", sessionId)
+		}
+		if mode != "" {
+			ctx = context.WithValue(ctx, "auth-mode", mode)
+		}
+
+		log.Println("srv_wrapper:", "mode:"+mode+" userId:"+userId+" storeId:"+storeId)
 
 		//继续执行下一步处理
 		err := fn(ctx, req, resp)
