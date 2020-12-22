@@ -18,5 +18,5 @@ type GrantRoute struct {
 	AllowAdmin     bool   `json:"allow_admin" gorm:"default:1"`    //授权平台管理员
 	AllowUser      bool   `json:"allow_user" gorm:"default:0"`     //授权用户
 	AllowCustomer  bool   `json:"allow_customer" gorm:"default:0"` //授权客户
-	Unlimited      bool   `json:"unlimited" gorm:"default:1"`      //无限制（任何人都可以访问）
+	Unlimited      bool   `json:"unlimited" gorm:"default:0"`      //无限制（任何人都可以访问）
 }
