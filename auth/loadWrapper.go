@@ -37,7 +37,7 @@ func LoadWrapper(fn server.HandlerFunc) server.HandlerFunc {
 			ctx = context.WithValue(ctx, "session-id", sessionId)
 		}
 		if mode != "" {
-			ctx = context.WithValue(ctx, "auth-mode", mode)
+			ctx = context.WithValue(ctx, "mode", mode)
 		}
 
 		//继续执行下一步处理

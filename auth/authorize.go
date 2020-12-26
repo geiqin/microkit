@@ -6,6 +6,26 @@ import (
 	"github.com/geiqin/gotools/helper"
 )
 
+//获得当前用户Mode
+func GetMode(ctx context.Context) string {
+	val := ctx.Value("mode")
+	if val != nil {
+		v := val.(string)
+		return v
+	}
+	return ""
+}
+
+//获得当前用户会话ID
+func GetSessionId(ctx context.Context) string {
+	val := ctx.Value("session_id")
+	if val != nil {
+		v := val.(string)
+		return v
+	}
+	return ""
+}
+
 //获得当前用户ID
 func GetUserId(ctx context.Context) int64 {
 	val := ctx.Value("user_id")
