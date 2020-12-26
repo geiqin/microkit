@@ -35,7 +35,7 @@ func GinJWTMiddleware(ctx *gin.Context) {
 		ctx.Keys["customer_id"] = g.CustomerId
 	}
 	if g.SessionId != "" {
-		ctx.Keys["session-id"] = g.SessionId
+		ctx.Keys["session_id"] = g.SessionId
 	}
 	if g.Mode != "" {
 		ctx.Keys["mode"] = g.Mode
