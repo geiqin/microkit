@@ -34,7 +34,7 @@ func LoadWrapper(fn server.HandlerFunc) server.HandlerFunc {
 			ctx = context.WithValue(ctx, "customer_id", customerId)
 		}
 		if sessionId != "" {
-			ctx = context.WithValue(ctx, "session-id", sessionId)
+			ctx = context.WithValue(ctx, "session_id", sessionId)
 		}
 		if mode != "" {
 			ctx = context.WithValue(ctx, "mode", mode)
