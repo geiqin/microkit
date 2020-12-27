@@ -9,3 +9,10 @@ type ResultData struct {
 	Pager  *common.Pager `json:"pager,omitempty"`
 	Error  *common.Error `json:"error,omitempty"`
 }
+
+func NewError(code int32, message string) *common.Error {
+	return &common.Error{
+		Code:    code,
+		Message: message,
+	}
+}
