@@ -11,6 +11,7 @@ type ResultData struct {
 	Info   *common.Info  `json:"info,omitempty"`
 	Items  interface{}   `json:"items,omitempty"`
 	Pager  *common.Pager `json:"pager,omitempty"`
+	Error  *common.Error `json:"error,omitempty"`
 }
 
 // 失败数据处理
