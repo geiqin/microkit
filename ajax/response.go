@@ -1,5 +1,7 @@
 package ajax
 
+/*
+
 type Info struct {
 	Number  int32  `protobuf:"varint,1,opt,name=number,proto3" json:"number,omitempty"`
 	Passed  bool   `protobuf:"varint,2,opt,name=passed,proto3" json:"passed,omitempty"`
@@ -36,3 +38,5 @@ func NewError(code int32, message string) *Error {
 		Message: message,
 	}
 }
+
+*/
