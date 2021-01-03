@@ -15,8 +15,8 @@ type EventType string
 
 //消息注册
 func init() {
-	myBroker = nats.NewBroker(
-		broker.Addrs(os.Getenv("MICRO_BROKER_ADDRESS")))
+	addr := os.Getenv("MICRO_BROKER_ADDRESS")
+	myBroker = nats.NewBroker(broker.Addrs(addr))
 
 	if err := myBroker.Init(); err != nil {
 		log.Println("broker init error :", err.Error())
