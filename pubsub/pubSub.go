@@ -14,26 +14,14 @@ var myBroker broker.Broker
 type EventType string
 
 //消息注册
-func Register() {
-
+func init() {
 	myBroker = nats.NewBroker(broker.Addrs(os.Getenv("MICRO_BROKER_ADDRESS")))
 	myBroker.Init()
 	err := myBroker.Connect()
 	if err != nil {
 		log.Println("broker connect error: %v", err)
 	}
-
-	log.Println("broker address:", myBroker.Address())
-	/*
-		if err := broker.Init(); err != nil {
-			log.Fatalf("Broker Init error: %v", err)
-		}
-
-		if err2 := broker.Connect(); err2 != nil {
-			log.Fatalf("Broker Connect error: %v", err2)
-		}
-
-	*/
+	log.Println("broker register succeed")
 }
 
 //消息发布
