@@ -10,6 +10,7 @@ require (
 	github.com/go-redis/redis v6.15.9+incompatible
 	github.com/golang/protobuf v1.4.0
 	github.com/micro/go-micro/v2 v2.9.1
+	github.com/micro/go-plugins/registry/nats/v2 v2.9.1 // indirect
 	google.golang.org/protobuf v1.23.0
 	gorm.io/driver/mysql v1.0.3
 	gorm.io/gorm v1.20.8
