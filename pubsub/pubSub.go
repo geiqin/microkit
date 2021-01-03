@@ -15,12 +15,17 @@ type EventType string
 
 //消息注册
 func init() {
-	myBroker = nats.NewBroker(broker.Addrs(os.Getenv("MICRO_BROKER_ADDRESS")))
-	myBroker.Init()
-	err := myBroker.Connect()
-	if err != nil {
-		log.Println("broker connect error: %v", err)
+	myBroker = nats.NewBroker(
+		broker.Addrs(os.Getenv("MICRO_BROKER_ADDRESS")))
+
+	if err := myBroker.Init(); err != nil {
+		log.Println("broker init error :", err.Error())
 	}
+
+	if err := myBroker.Connect(); err != nil {
+		log.Println("broker connect error :", err.Error())
+	}
+
 	log.Println("broker register succeed")
 }
 
