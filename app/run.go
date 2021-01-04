@@ -44,6 +44,8 @@ func Run(flag string, private bool, option ...Option) {
 	database.Load(connCfg)
 	sessionCnf := appCfg.Session
 	cacheCnf := databaseCfg.RedisList["cache"]
+	sessionRedisCnf := databaseCfg.RedisList["session"]
+	sessionCnf.Provider = sessionRedisCnf
 	session.Load(sessionCnf)
 	cache.Load(cacheCnf)
 
