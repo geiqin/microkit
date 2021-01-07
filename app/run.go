@@ -1,7 +1,6 @@
 package app
 
 import (
-	"github.com/geiqin/gotools/helper"
 	"github.com/geiqin/microkit/auth"
 	"github.com/geiqin/microkit/cache"
 	"github.com/geiqin/microkit/database"
@@ -40,8 +39,6 @@ func Run(flag string, private bool, option ...Option) {
 	appOption = opt
 
 	appCfg := client.GetAppConfig()
-	log.Println("appCfg:", helper.JsonEncode(appCfg))
-	log.Println("app_cfg:", helper.JsonEncode(appCfg.Token))
 	databaseCfg := client.GetDatabaseConfig()
 	connCfg := databaseCfg.Connections
 	database.Load(connCfg)
