@@ -39,7 +39,7 @@ func LoadRedis(cfg *model.SessionInfo) {
 	if c.Err() != nil {
 		log.Println("connect session redis is failed :", c.Err().Error())
 	}
-	log.Println("session expired value :", cfg.MaxLifeTime)
+
 	pder = &FromRedis{
 		Driver: client,
 		TTL:    cfg.MaxLifeTime,
