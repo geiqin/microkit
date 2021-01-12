@@ -34,6 +34,12 @@ func LoadRedis(cfg *model.SessionInfo) {
 		Password: "",                    // no password set
 		DB:       cfg.Provider.Database, // use default DB
 	})
+
+	c := client.Ping()
+	if c.Err() != nil {
+		log.Println("connect session redis is failed :", c.Err().Error())
+	}
+	log.Println("session expired value :", cfg.MaxLifeTime)
 	pder = &FromRedis{
 		Driver: client,
 		TTL:    cfg.MaxLifeTime,

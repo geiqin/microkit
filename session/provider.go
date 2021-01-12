@@ -62,6 +62,7 @@ func Register(name string, provide Provider) {
 		panic("session: Register called twice for provide " + name)
 	}
 	provides[name] = provide
+
 }
 
 var provides = make(map[string]Provider)
