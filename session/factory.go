@@ -3,8 +3,8 @@ package session
 import (
 	"context"
 	"fmt"
+	"github.com/geiqin/microkit/auth"
 	"github.com/geiqin/xconfig/model"
-	"github.com/micro/go-micro/v2/metadata"
 	"log"
 )
 
@@ -46,9 +46,5 @@ func Destroy(ctx context.Context) {
 }
 
 func GetSessionId(ctx context.Context) string {
-	meta, ok := metadata.FromContext(ctx)
-	if ok {
-		return meta["Session-Id"]
-	}
-	return ""
+	return auth.GetSessionId(ctx)
 }
