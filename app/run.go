@@ -6,10 +6,12 @@ import (
 	"github.com/geiqin/microkit/database"
 	"github.com/geiqin/microkit/session"
 	"github.com/geiqin/xconfig/client"
+	"github.com/geiqin/xconfig/model"
 	"log"
 )
 
 var appOption *Option
+var appConfig *model.AppConfig
 
 //var once sync.Once
 
@@ -38,18 +40,19 @@ func Run(flag string, private bool, option ...Option) {
 	opt.Private = private
 	appOption = opt
 
-	appCfg := client.GetAppConfig()
+	appConfig := client.GetAppConfig()
+
 	databaseCfg := client.GetDatabaseConfig()
 	connCfg := databaseCfg.Connections
 	database.Load(connCfg)
-	sessionCnf := appCfg.Session
+	sessionCnf := appConfig.Session
 	cacheCnf := databaseCfg.RedisList["cache"]
 	sessionRedisCnf := databaseCfg.RedisList["session"]
 	sessionCnf.Provider = sessionRedisCnf
 	session.Load(sessionCnf)
 	cache.Load(cacheCnf)
 
-	auth.Load(appCfg.Token)
+	auth.Load(appConfig.Token)
 
 }
 
@@ -63,4 +66,8 @@ func Private() bool {
 
 func GetOption() *Option {
 	return appOption
+}
+
+func GetConfig() *model.AppConfig {
+	return appConfig
 }

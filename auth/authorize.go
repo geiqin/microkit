@@ -56,8 +56,12 @@ func GetCustomerId(ctx context.Context) int64 {
 	return 0
 }
 
-func GetStoreFlag(id int64) string {
+func GetStoreFlag(id int64, prefix ...string) string {
 	flag := fmt.Sprintf("%08d", id)
-	flag = "go_store_" + flag
+	p := "go_store_"
+	if prefix != nil {
+		p = prefix[0]
+	}
+	flag = p + flag
 	return flag
 }
