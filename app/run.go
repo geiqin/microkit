@@ -40,7 +40,7 @@ func Run(flag string, private bool, option ...Option) {
 	opt.Private = private
 	appOption = opt
 
-	appConfig := client.GetAppConfig()
+	appConfig = client.GetAppConfig()
 
 	databaseCfg := client.GetDatabaseConfig()
 	connCfg := databaseCfg.Connections
